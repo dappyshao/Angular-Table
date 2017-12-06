@@ -1,0 +1,12 @@
+th, td {
+  text-align: center;
+}
+
+input {
+  border-radius: 5px;
+  padding: 4px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}

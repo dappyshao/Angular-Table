@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="TableApp">
+  <head>
+      <meta charset="utf-8">
+      <title>Angular Table</title>
+
+      <!-- Angular -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+      <script src="app.js"></script>
+
+
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+      <!-- Styles -->
+      <link rel="stylesheet" href="styles.css">
+
+  </head>
+  <div class="container-fluid">
+    <body ng-controller="mainController">
+      <!-- Display a table which contains all users -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>
+              Name
+              <button type="button" class="btn btn-default btn-xs" ng-click="sortNameAsc()">
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="sortNameDesc()">
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              </button>
+            </th>
+            <th>
+              Last Name
+              <button type="button" class="btn btn-default btn-xs" ng-click="sortByKeyAsc(users,'lastName')">
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-click=sortByKeyDesc(users,'lastName')>
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              </button>
+            </th>
+            <th>
+              Email
+              <button type="button" class="btn btn-default btn-xs" ng-click="sortByKeyAsc(users,'email')">
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="sortByKeyDesc(users,'email')">
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              </button>
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" ng-model="nameSearch"/></td>
+            <td><input type="text" ng-model="lastNameSearch"/></td>
+            <td><input type="text" ng-model="emailSearch"/></td>
+            <td><strong>Filter</strong></td>
+          </tr>
+          <tr ng-repeat="user in users | filter : {'name': nameSearch,'lastName': lastNameSearch, 'email': emailSearch}">
+            <td>{{user.name}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" ng-click="removeUser(user.id)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Adding User -->
+      <h2>Add User</h2>
+      <form name="addUserForm">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" placeholder="Name" name="name" ng-model="name" ng-required="true"/>
+          <div ng-show="addUserForm.name.$touched && addUserForm.name.$invalid">
+            <small style="color: red; display: block; text-align: left"> Enter a valid name!</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="">Last Name</label>
+          <input type="text" placeholder="Last Name" name="lastName" ng-model="lastName" ng-required="true"/>
+          <div ng-show="addUserForm.lastName.$touched && addUserForm.lastName.$invalid">
+            <small style="color: red; display: block; text-align: left"> Enter a valid last name!</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="Email" name="email" ng-model="emailAddress" ng-required="true"/>
+          <div ng-show="addUserForm.email.$touched && addUserForm.email.$invalid">
+            <small style="color: red; display: block; text-align: left"> Enter a valid email!</small>
+          </div>
+        </div>
+        <button class="btn btn-primary" ng-click="checkAndAddUser(emailAddress)" ng-disabled="addUserForm.$invalid">Add user</button>
+      </form>
+    </div>
+  </body>
+</html>
